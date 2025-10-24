@@ -4,7 +4,7 @@ services:
     build:
       context: ./databases/account_db
       args:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_DATABASE=account_db
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -16,6 +16,23 @@ services:
     networks:
       - spring-microservice
 
+  department_db:
+    container_name: department_db
+    build:
+      context: ./databases/department_db
+      args:
+        - MYSQL_DATABASE=department_db
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./databases/department_db/init_department.sql:/docker-entrypoint-initdb.d/init_department.sql
+      - ./databases/department_db/mysql-data:/var/lib/mysql
+    networks:
+      - spring-microservice
+
   account-service:
     container_name: account-service
     build:
@@ -23,11 +40,30 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
+    depends_on:
+      - account_db
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://account_db:3306/account_db?createDatabaseIfNotExist=true&characterEncoding=UTF-8&serverTimeZone=UTC&allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_USERNAME: hungnv
       SPRING_DATASOURCE_PASSWORD: 123abc
       SPRING_APPLICATION_NAME: account-service
+    networks:
+      - spring-microservice
+
+  department-service:
+    container_name: department-service
+    build:
+      context: ./department-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - department_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://department_db:3306/department_db?createDatabaseIfNotExist=true&characterEncoding=UTF-8&serverTimeZone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: hungnv
+      SPRING_DATASOURCE_PASSWORD: 123abc
+      SPRING_APPLICATION_NAME: department-service
     networks:
       - spring-microservice
 

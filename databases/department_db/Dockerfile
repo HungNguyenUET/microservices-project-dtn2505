@@ -6,7 +6,7 @@ ARG MYSQL_PASSWORD
 ARG MYSQL_ROOT_PASSWORD
 ARG MYSQL_PORT
 
-ENV MYSQL_DATABASE=account_db
+ENV MYSQL_DATABASE=department_db
 ENV MYSQL_USER=$MYSQL_USER
 ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
 ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
@@ -14,6 +14,6 @@ ENV MYSQL_PORT=$MYSQL_PORT
 
 # Copy any custom SQL scripts to initialize the database
 # These scripts will run when the container starts
-COPY init_account.sql /docker-entrypoint-initdb.d/
+COPY init_department.sql /docker-entrypoint-initdb.d/
 
-EXPOSE 3307
+EXPOSE 3308
