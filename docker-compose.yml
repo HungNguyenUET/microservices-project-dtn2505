@@ -33,6 +33,23 @@ services:
     networks:
       - spring-microservice
 
+  user_db:
+    container_name: user_db
+    build:
+      context: ./databases/user_db
+      args:
+        - MYSQL_DATABASE=user_db
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./databases/user_db/init_user.sql:/docker-entrypoint-initdb.d/init_user.sql
+      - ./databases/user_db/mysql-data:/var/lib/mysql
+    networks:
+      - spring-microservice
+
   account-service:
     container_name: account-service
     build:
