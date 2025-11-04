@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### temp file ###
-mysql/mysql-data
-databases/account_db/mysql-data
-databases/department_db/mysql-data
-databases/user_db/mysql-data
+mysql/mysql-data/
+databases/account_db/mysql-data/
+databases/department_db/mysql-data/
+databases/user_db/mysql-data/
