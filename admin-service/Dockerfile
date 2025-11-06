@@ -1,5 +1,5 @@
 # Sử dụng image cơ sở Java
-FROM openjdk:25-jdk
+FROM eclipse-temurin:25-jdk
 
 # Thông tin tác giả
 LABEL authors="hungnv"

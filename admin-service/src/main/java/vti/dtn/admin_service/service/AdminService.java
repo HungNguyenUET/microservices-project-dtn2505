@@ -1,7 +1,10 @@
 package vti.dtn.admin_service.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+import vti.dtn.admin_service.dto.AccountDTO;
 import vti.dtn.admin_service.dto.DepartmentDTO;
 import vti.dtn.admin_service.feginclient.DepartmentFeignClient;
 
@@ -15,9 +18,17 @@ public class AdminService {
 
     private final KafkaProducerService kafkaProducerService;
     private final DepartmentFeignClient departmentFeignClient;
+    private final RestClient restClient;
 
     public List<DepartmentDTO> getDepartments() {
         return departmentFeignClient.getAllDepartments();
+    }
+
+    public List<AccountDTO> getAccounts() {
+        return restClient.get()
+                .uri("http://account-service:8081/api/v1/accounts")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<AccountDTO>>() {});
     }
 
     public String sendMsgKafka(String message) {

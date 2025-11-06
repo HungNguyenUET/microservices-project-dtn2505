@@ -1,5 +1,5 @@
 # Sử dụng image cơ sở Java
-FROM openjdk:25-jdk
+FROM eclipse-temurin:25-jdk
 
 # Tạo thư mục làm việc trong container
 WORKDIR /app

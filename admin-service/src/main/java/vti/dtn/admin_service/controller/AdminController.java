@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import vti.dtn.admin_service.dto.AccountDTO;
 import vti.dtn.admin_service.dto.DepartmentDTO;
 import vti.dtn.admin_service.service.AdminService;
 
@@ -20,6 +21,11 @@ public class AdminController {
     @GetMapping("/departments")
     public List<DepartmentDTO> getDepartments() {
         return adminService.getDepartments();
+    }
+
+    @GetMapping("/accounts")
+    public List<AccountDTO> getAccounts() {
+        return adminService.getAccounts();
     }
 
     @GetMapping("/test-kafka")
