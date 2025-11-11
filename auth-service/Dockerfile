@@ -1,5 +1,5 @@
 # Sử dụng image JDK 17 chính thức
-FROM openjdk:25-jdk
+FROM eclipse-temurin:25-jdk
 
 # Tạo thư mục ứng dụng trong container
 WORKDIR /app
